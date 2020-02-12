@@ -29,7 +29,7 @@ end
 
 hook.Add( "PlayerSay", "CFC_HideHolos_getCommands", getCommands )
 
--- When a new holograms is spawned apply it's visibility setting for all players
+-- When a new hologram is spawned, apply its visibility setting for all players
 local function initializeNewHolos( ent )
     local isValidHolo = IsValid( ent ) and ent:GetClass() == "gmod_wire_hologram"
 
