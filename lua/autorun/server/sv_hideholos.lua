@@ -16,12 +16,8 @@ hook.Add( "PlayerInitialSpawn", "CFC_HideHolos_initalizePlayer", initializePlaye
 
 -- Update a player's holo visibility using chat commands
 local function getCommands( ply, text )
-    if text == "!displayholos" then
-        ply.cfc_holosDisabled = false
-
-        updateHoloVisibility( ply )
-    elseif text == "!hideholos" then
-        ply.cfc_holosDisabled = true
+    if text == "!holodisplay" then
+        ply.cfc_holosDisabled = not cfc_holosDisabled
 
         updateHoloVisibility( ply )
     end
