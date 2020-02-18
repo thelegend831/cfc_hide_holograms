@@ -20,6 +20,14 @@ local function getCommands( ply, text )
         ply.cfc_holosDisabled = not cfc_holosDisabled
 
         updateHoloVisibility( ply )
+    elseif text == "!displayholos" then
+        ply.cfc_holosDisabled = false
+
+        updateHoloVisibility( ply )
+    elseif text == "!hideholos" then
+        ply.cfc_holosDisabled = true
+
+        updateHoloVisibility( ply )
     end
 end
 
