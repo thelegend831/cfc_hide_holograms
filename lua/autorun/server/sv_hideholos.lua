@@ -1,15 +1,29 @@
+util.AddNetworkString( "update_hologram_visibility_preference" )
+util.AddNetworkString( "get_user_hologram_visibility_preference" )
+
 -- Updates the visibility of all holos for a specific player
 local function updateHoloVisibility( ply )
     for _, holo in pairs( ents.FindByClass( "gmod_wire_hologram" ) ) do
         holo:SetPreventTransmit( ply, ply.cfc_holosDisabled )
     end
+
+    net.Start( "update_hologram_visibility_preference" )
+        net.WriteBool( ply.cfc_holosDisabled )
+    net.Send( ply )
 end
+
+net.Receive( "get_user_hologram_visibility_preference", function( len, ply )
+    ply.cfc_holosDisabled = net.ReadBool()
+
+    updateHoloVisibility( ply )
+end )
 
 -- Initialize the player's cfc_holosDisabled variable and hide all existing holos
 local function initializePlayer( ply )
-    ply.cfc_holosDisabled = true
-
-    updateHoloVisibility( ply )
+    timer.Create( 5, function()
+        net.Start( "get_user_hologram_visibility_preference" )
+        net.Send( ply )
+    end )
 end
 
 hook.Add( "PlayerInitialSpawn", "CFC_HideHolos_initalizePlayer", initializePlayer )
