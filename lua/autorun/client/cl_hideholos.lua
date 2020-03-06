@@ -4,7 +4,7 @@ net.Receive( "update_hologram_visibility_preference", function( len )
 end )
 
 net.Receive( "get_user_hologram_visibility_preference", function( len )
-    local chip = cookie.GetNumber( "cfc_hologram_visibility_preference", 0 )
+    local chip = cookie.GetNumber( "cfc_hologram_visibility_preference", 0 ) ~= 0
 
     net.Start( "get_user_hologram_visibility_preference" )
         net.WriteBool( chip )
