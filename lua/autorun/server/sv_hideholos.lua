@@ -1,5 +1,5 @@
-util.AddNetworkString( "update_hologram_visibility_preference" )
-util.AddNetworkString( "get_user_hologram_visibility_preference" )
+util.AddNetworkString( "CFC_UpdateHoloPreference" )
+util.AddNetworkString( "CFC_GetHoloPreference" )
 
 -- Updates the visibility of all holos for a specific player
 local function updateHoloVisibility( ply )
@@ -7,12 +7,12 @@ local function updateHoloVisibility( ply )
         holo:SetPreventTransmit( ply, ply.cfc_holosDisabled )
     end
 
-    net.Start( "update_hologram_visibility_preference" )
+    net.Start( "CFC_UpdateHoloPreference" )
         net.WriteBool( ply.cfc_holosDisabled )
     net.Send( ply )
 end
 
-net.Receive( "get_user_hologram_visibility_preference", function( len, ply )
+net.Receive( "CFC_GetHoloPreference", function( len, ply )
     ply.cfc_holosDisabled = net.ReadBool()
 
     updateHoloVisibility( ply )
@@ -21,7 +21,7 @@ end )
 -- Initialize the player's cfc_holosDisabled variable and hide all existing holos
 local function initializePlayer( ply )
     timer.Create( 5, function()
-        net.Start( "get_user_hologram_visibility_preference" )
+        net.Start( "CFC_GetHoloPreference" )
         net.Send( ply )
     end )
 end
