@@ -1,3 +1,5 @@
+local DEFAULT_HOLOS_DISABLED = false
+
 -- Updates the visibility of all holos for a specific player
 local function updateHoloVisibility( ply )
     for _, holo in pairs( ents.FindByClass( "gmod_wire_hologram" ) ) do
@@ -7,7 +9,7 @@ end
 
 -- Initialize the player's cfc_holosDisabled variable and hide all existing holos
 local function initializePlayer( ply )
-    ply.cfc_holosDisabled = true
+    ply.cfc_holosDisabled = DEFAULT_HOLOS_DISABLED
 
     updateHoloVisibility( ply )
 end
